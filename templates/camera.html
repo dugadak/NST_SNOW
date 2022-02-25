@@ -10,6 +10,7 @@
     <script>
 
 
+
         $(document).on('click', '#files_send', function () {
             let formData = new FormData();
             let key = $('#file_name').val();
@@ -27,10 +28,15 @@
                 processData: false,
                 success: function (response) {
                         console.log(response);
+                        $('.down').remove()
+                        let abc = ``
+                        abc = `<a class="down" onClick="javascript:location.href='${response.file_url}';">다운로드</a>`
+                        $('#download').append(abc)
 
-                }
+                    }
+                })
 
-            })
+
         })
 
 
@@ -39,11 +45,14 @@
 <body>
 
 <form id="ajaxform" action="/upload" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+
     <input type="file" multiple id="photo_upload">
     <input type="text" id="file_name">
     <output id="list"></output>
     <input type="button" value="완료" id="files_send">
+    <div id = 'download'>
+    <a class = down>다운로드</a>
+    </div>
 </form>
 
 </body>
