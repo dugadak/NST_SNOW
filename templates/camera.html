@@ -9,41 +9,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
-        {#function get() {#}
-        {#    $.ajax({#}
-        {#        url: 'http://localhost:5000/api/v1/nsts',#}
-        {#        type: 'get',#}
-        {#        dataType: 'json',#}
-        {#        data: {#}
-        {#            test: 'test_data'#}
-        {#        },#}
-        {#        contentType: false,#}
-        {#        processData: false,#}
-        {#        success: function (response) {#}
-        {#            console.log(response);#}
-        {##}
-        {#        }#}
-        {##}
-        {#    })#}
-        {#}#}
 
         $(document).on('click', '#files_send', function () {
             let formData = new FormData();
-            let key = $('#file_name').text();
+            let key = $('#file_name').val();
 
-            for (let i = 0; i < $('#photo_upload')[0].files.length; i++) {
-                formData.append('uploadFile', $('#photo_upload')[0].files[i]);
-            }
+            let file = $('#photo_upload')[0].files[0]
 
+            formData.append('key',key)
+            formData.append('img',file)
 
             $.ajax({
-                url: 'http://localhost:5000/api/v1/nsts',
-                type: 'get',
-                data: {'key': key, 'img': formData},
+                url: 'http://localhost:5000/api/v1/nsts/',
+                type: 'post',
+                data: formData,
                 contentType: false,
                 processData: false,
-                success: function (data) {
-                    console.log(data);
+                success: function (response) {
+                        console.log(response);
 
                 }
 
