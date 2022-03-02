@@ -24,7 +24,71 @@
         <canvas id="myCanvas" class="myCanvas"></canvas>
         <video autoplay="true" class="webcam" id="videoElement"></video>
     </div>
-    <form class="filters"></form>
+    <div class="tab" style="text-align:left">
+        <input id="tab1" type="radio" name="tabs" checked>
+        <label for="tab1">NST</label>
+        <input id="tab2" type="radio" name="tabs">
+        <label for="tab2">Sticker</label>
+
+        <section id="content1">
+            <div class="filter-box" onclick="filter('composition_vii')">
+                <div class="filter-image" id="filter-image1"></div>
+                <div class="filter-name">composition_vii</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('la_muse')">
+                <div class="filter-image" id="filter-image2"></div>
+                <div class="filter-name">la_muse</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('starry_night')">
+                <div class="filter-image" id="filter-image3"></div>
+                <div class="filter-name">starry_night</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('the_wave')">
+                <div class="filter-image" id="filter-image4"></div>
+                <div class="filter-name">the_wave</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('candy')">
+                <div class="filter-image" id="filter-image5"></div>
+                <div class="filter-name">candy</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('feathers')">
+                <div class="filter-image" id="filter-image6"></div>
+                <div class="filter-name">feathers</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('mosaic')">
+                <div class="filter-image" id="filter-image7"></div>
+                <div class="filter-name">mosaic</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('the_scream')">
+                <div class="filter-image" id="filter-image8"></div>
+                <div class="filter-name">the_scream</div>
+            </div>
+
+            <div class="filter-box" onclick="filter('udnie')">
+                <div class="filter-image" id="filter-image9"></div>
+                <div class="filter-name">udnie</div>
+            </div>
+        </section>
+
+        <section id="content2">
+            <div class="sticker-box" onclick="sticker('glasses')">
+                <div class="sticker-image" id="sticker-image1"></div>
+                <div class="filter-name">glasses</div>
+            </div>
+
+            <div class="sticker-box" onclick="sticker('pig')">
+                <div class="sticker-image" id="sticker-image2"></div>
+                <div class="filter-name">pig</div>
+            </div>
+        </section>
+    </div>
 
     <button id="btn-shoot" class="btn-shoot">
         <div class="btn-filled"></div>
@@ -35,35 +99,99 @@
 </body>
 
 <script>
-    $('#feed_create_button').click(function () {
-        let file = files[0];
+    function saveImage() {
+        var $canvas = document.createElement('canvas');
+        var imgDataUrl = $canvas.toDataURL('image/png');
+        var blobBin = atob(imgDataUrl.split(',')[1]);	// base64 데이터 디코딩
+        var array = [];
+        for (var i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i));
+        }
+        var file = new Blob([new Uint8Array(array)], {type: 'image/png'});
+        console.log(file)// Blob 생성
+        var fd = new FormData();	// formData 생성
+        fd.append("img", file);	// file data 추가
+
+        for (let value of fd.values()) { console.log(value); }
+    }
+
+    function filter(filter_name) {
+        let name = filter_name
+        let file_name = 'myCanvas'
         let fd = new FormData();
 
-        fd.append('file', file);
+
+        fd.append('file_name', file_name);
+        fd.append('name', name);
+        console.log(fd)
+        for (let value of fd.values()) { console.log(value); }
 
         $.ajax({
-            url: "/api/feeds",
+            url: "http://127.0.0.1:5000/api/v1/models/",
             data: fd,
             method: "POST",
             processData: false,
             contentType: false,
             success: function (response) {
                 console.log("성공");
+                console.log(response['file_url'])
+
+                $('.image-area').css({
+                    "background-image": "url("+ (response['file_url']) + ")",
+                })
+                $('.btn-shoot').click(function () {
+                    location.replace(response['file_url'])
+                })
+
             },
             error: function (request, status, error) {
                 console.log("에러");
             },
             complete: function () {
                 console.log("완료");
-                location.replace("/");
+                console.log(filter_name)
             }
         });
-    });
+    }
+
+    function sticker(sticker_name) {
+        let img = files[0];
+        let file_name = files[0].name;
+        let name = sticker_name
+        let fd = new FormData();
+
+        fd.append('img', img);
+        fd.append('file_name', file_name);
+        fd.append('name', name);
+
+        $.ajax({
+            url: "http://127.0.0.1:5000/api/v1/models/sticker",
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("성공");
+                $('.image-area').css({
+                    "background-image": "url("+ (response['sticker_url']) + ")",
+                })
+                $('.btn-shoot').click(function () {
+                    location.replace(response['sticker_url'])
+                })
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+                console.log(sticker_name)
+            }
+        });
+    };
 
     $('#gallery').click(function () {
-       location.replace('/upload')
+        location.replace('/upload')
     });
-
 
 
 </script>
