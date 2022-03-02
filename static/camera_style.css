@@ -1,0 +1,81 @@
+.desktop-screen {
+    width: 30vw;
+    height: 90vh;
+    margin: 3vh auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 12px lightgray;
+}
+
+.blank {
+    height: 1vh;
+}
+
+.nav {
+    width: 100%;
+    height: 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.material-icons-outlined {
+    margin: auto 1.5vw;
+    cursor: pointer;
+}
+
+.nav-logo {
+    width: 10%;
+    height: 90%;
+    background: url("../static/images/nav-logo.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.image-area {
+    width: 90%;
+    height: 58%;
+    margin: 2vh auto;
+    border: 1px dotted gray;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.webcam {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.filters {
+    width: 90%;
+    height: 12%;
+    background: gold;
+    margin: auto;
+}
+
+.btn-shoot {
+    width: 20%;
+    height: 13%;
+    border-radius: 100%;
+    box-shadow: 2px 2px 12px lightgray;
+    margin: 2vh auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-filled {
+    width: 70%;
+    height: 70%;
+    border-radius: 100%;
+    background: rgb(95,184,221);
+    background: linear-gradient(135deg, rgba(95,184,221,1) 20%, rgba(68,194,212,1) 45%, rgba(74,186,236,1) 80%);
+}
+#myCanvas{
+    width: 100%;
+    height: 100%;
+}
+

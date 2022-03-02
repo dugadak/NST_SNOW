@@ -1,0 +1,231 @@
+.desktop-screen {
+    width: 30vw;
+    height: 90vh;
+    margin: 3vh auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 12px lightgray;
+}
+
+.blank {
+    height: 1vh;
+}
+
+.nav {
+    width: 100%;
+    height: 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.material-icons-outlined {;
+    margin: auto 1.5vw;
+    cursor: pointer;
+}
+
+.nav-logo {
+    width: 10%;
+    height: 90%;
+    background: url("images/nav-logo.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+#gallery {
+    display: none;
+}
+
+.image-area {
+    width: 70%;
+    height: 58%;
+    /*padding: 1vw;*/
+    margin: 2vh auto;
+    border: 1px dotted gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-area-text {
+    position: relative;
+    top: -18vh;
+}
+
+.btn-shoot {
+    width: 4vw;
+    height: 7.5vh;
+    border-radius: 100%;
+    box-shadow: 2px 2px 12px lightgray;
+    margin: 3vh auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-filled {
+    width: 70%;
+    height: 70%;
+    border-radius: 100%;
+    background: rgb(95, 184, 221);
+    background: linear-gradient(135deg, rgba(95, 184, 221, 1) 20%, rgba(68, 194, 212, 1) 45%, rgba(74, 186, 236, 1) 80%);
+}
+
+.tab {
+    min-width: 50%;
+    max-width: 90%;
+    margin-left: 1.5vw;
+    border-radius: 7px;
+    background: #ffffff;
+}
+
+section {
+    height: 10vh;
+    display: none;
+    padding: 2% 0 0;
+    border: 1px solid #ddd;
+}
+
+input {
+    display: none;
+}
+
+label {
+    padding: 1% 5%;
+    font-weight: bolder;
+    color: #bbb;
+}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;
+}
+
+input:checked + label {
+    color: #555;
+    border: 1px solid #ddd;
+    border-top: 2px solid #2e9cdf;
+    border-bottom: none;
+}
+
+#tab1:checked ~ #content1 {
+    display: flex;
+}
+
+#tab1:checked ~ #content2 {
+    display: none;
+}
+
+#tab2:checked ~ #content1 {
+    display: none;
+}
+
+#tab2:checked ~ #content2 {
+    display: flex;
+}
+
+
+#content1 {
+    display: flex;
+    align-items: center;
+    width: 27vw;
+    overflow: auto;
+}
+
+.filter-box {
+    width: 6vw;
+    height: 100%;
+    margin-left: 0.7vw;
+    margin-right: 0.7vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filter-image {
+    width: 3vw;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#filter-image1 {
+    background-image: url('../static/images/nst_test_cat.jpeg_composition_vii.png');
+}
+
+#filter-image2 {
+    background-image: url('../static/images/nst_test_cat.jpeg_la_muse.png');
+}
+
+#filter-image3 {
+    background-image: url('../static/images/nst_test_cat.jpeg_starry_night.png');
+}
+
+#filter-image4 {
+    background-image: url('../static/images/nst_test_cat.jpeg_the_wave.png');
+}
+
+#filter-image5 {
+    background-image: url('../static/images/nst_test_cat.jpeg_candy.png');
+}
+
+#filter-image6 {
+    background-image: url('../static/images/nst_test_cat.jpeg_feathers.png');
+}
+
+#filter-image7 {
+    background-image: url('../static/images/nst_test_cat.jpeg_mosaic.png');
+}
+
+#filter-image8 {
+    background-image: url('../static/images/nst_test_cat.jpeg_the_scream.png');
+}
+
+#filter-image9 {
+    background-image: url('../static/images/nst_test_cat.jpeg_udnie.png');
+}
+
+.filter-name {
+    font-size: 0.8rem;
+}
+
+#content2 {
+    display: flex;
+    align-items: center;
+    width: 27vw;
+    overflow: auto;
+}
+
+.sticker-box {
+    width: 3.5vw;
+    height: 100%;
+    margin-left: 0.7vw;
+    margin-right: 0.7vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sticker-image {
+    width: 3vw;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid rgba(0,0,0,.1);
+}
+
+#sticker-image1 {
+    background-image: url("../static/images/glasses.png");
+}
+
+#sticker-image2 {
+    background-image: url("../static/images/pig.png");
+
+}

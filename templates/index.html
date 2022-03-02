@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snow app</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="../static/index_style.css?after">
+    <link rel="shortcut icon" href="../static/images/favicon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+          rel="stylesheet">
+</head>
+<body>
+<div class="desktop-screen">
+    <div class="blank"></div>
+    <div class="nav">
+        <span class="material-icons-outlined" id="logout">logout</span>
+        <div class="nav-logo"></div>
+        <span class="material-icons-outlined" id="camera">photo_camera</span>
+    </div>
+    <div class="image-area">
+        <span class="material-icons-outlined" id="image-icon">perm_media</span>
+        <p class="image-area-text">여기에 사진을 올려주세요</p>
+    </div>
+
+    <div class="tab" style="text-align:left">
+
+    <input id="tab1" type="radio" name="tabs" checked>
+    <label for="tab1">NST</label>
+
+    <input id="tab2" type="radio" name="tabs">
+    <label for="tab2">Sticker</label>
+
+
+    <section id="content1">
+        <div class="filter-box" onclick="filter('composition_vii')">
+            <div class="filter-image" id="filter-image1"></div>
+            <div class="filter-name">composition_vii</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('la_muse')">
+            <div class="filter-image" id="filter-image2"></div>
+            <div class="filter-name">la_muse</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('starry_night')">
+            <div class="filter-image" id="filter-image3"></div>
+            <div class="filter-name">starry_night</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('the_wave')">
+            <div class="filter-image" id="filter-image4"></div>
+            <div class="filter-name">the_wave</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('candy')">
+            <div class="filter-image" id="filter-image5"></div>
+            <div class="filter-name">candy</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('feathers')">
+            <div class="filter-image" id="filter-image6"></div>
+            <div class="filter-name">feathers</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('mosaic')">
+            <div class="filter-image" id="filter-image7"></div>
+            <div class="filter-name">mosaic</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('the_scream')">
+            <div class="filter-image" id="filter-image8"></div>
+            <div class="filter-name">the_scream</div>
+        </div>
+
+        <div class="filter-box" onclick="filter('udnie')">
+            <div class="filter-image" id="filter-image9"></div>
+            <div class="filter-name">udnie</div>
+        </div>
+    </section>
+
+    <section id="content2">
+        <div class="sticker-box" onclick="sticker('glasses')">
+            <div class="sticker-image" id="sticker-image1"></div>
+            <div class="filter-name">glasses</div>
+        </div>
+
+        <div class="sticker-box" onclick="sticker('pig')">
+            <div class="sticker-image" id="sticker-image2"></div>
+            <div class="filter-name">pig</div>
+        </div>
+    </section>
+
+    <div class="btn-shoot">
+        <div class="btn-filled"></div>
+    </div>
+</div>
+
+
+</body>
+
+<script>
+    let files;
+
+    $(function(){
+        $('.tabcontent > div').hide();
+        $('.tabnav a').click(function () {
+        $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+        $('.tabnav a').removeClass('active');
+        $(this).addClass('active');
+        return false;
+        }).filter(':eq(0)').click();
+    });
+
+    $('.image-area')
+        .on("dragover", dragOver)
+        .on("dragleave", dragOver)
+        .on("drop", uploadFiles);
+
+    function dragOver(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.type == "dragover") {
+            $(e.target).css({
+                "background-color": "lightgray",
+                "outline-offset": "-20px"
+            });
+        } else {
+            $(e.target).css({
+                "background-color": "white",
+                "outline-offset": "-10px"
+            });
+        }
+    }
+
+    function uploadFiles(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        e.dataTransfer = e.originalEvent.dataTransfer; //2
+        files = e.target.files || e.dataTransfer.files;
+        if (files.length > 1) {
+            alert('하나만 올려라.');
+        }
+
+        if (files[0].type.match(/image.*/)) {
+            $('#image-icon').hide()
+            $('.image-area-text').hide()
+
+            $('.image-area').css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "100% 100%"
+            });
+        } else {
+            alert('이미지 형식의 파일만 지원합니다');
+        }
+    }
+
+    function filter(filter_name) {
+        let img = files[0];
+        let name = filter_name
+        let file_name = files[0].name;
+        let fd = new FormData();
+
+        fd.append('img', img);
+        fd.append('file_name', file_name);
+        fd.append('name', name);
+
+        $.ajax({
+            url: "http://127.0.0.1:5000/api/v1/models/",
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("성공");
+                console.log(response['file_url'])
+
+                $('.image-area').css({
+                    "background-image": "url("+ (response['file_url']) + ")",
+                })
+                $('.btn-shoot').click(function () {
+                    location.replace(response['file_url'])
+                })
+
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+                console.log(filter_name)
+            }
+        });
+    }
+
+    function sticker(sticker_name) {
+        let img = files[0];
+        let file_name = files[0].name;
+        let name = sticker_name
+        let fd = new FormData();
+
+        fd.append('img', img);
+        fd.append('file_name', file_name);
+        fd.append('name', name);
+
+        $.ajax({
+            url: "http://127.0.0.1:5000/api/v1/models/sticker",
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("성공");
+                $('.image-area').css({
+                    "background-image": "url("+ (response['sticker_url']) + ")",
+                })
+                $('.btn-shoot').click(function () {
+                    location.replace(response['sticker_url'])
+                })
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+                console.log(sticker_name)
+            }
+        });
+    };
+
+    $('#camera').click(function () {
+        location.replace('/camera')
+    });
+
+    $('#logout').click(function (){
+        location.replace('/logout')
+    });
+</script>
