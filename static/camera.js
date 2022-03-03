@@ -60,7 +60,6 @@
 
         startbutton.addEventListener('click', function (ev) {
             takepicture();
-            saveImage();
             ev.preventDefault();
         }, false);
 

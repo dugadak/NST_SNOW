@@ -16,7 +16,7 @@
 <div class="desktop-screen">
     <div class="blank"></div>
     <div class="nav">
-        <span class="material-icons-outlined">logout</span>
+        <span class="material-icons-outlined" id="logout">logout</span>
         <div class="nav-logo"></div>
         <span class="material-icons-outlined" id="gallery">collections</span>
     </div>
@@ -108,14 +108,18 @@
             array.push(blobBin.charCodeAt(i));
         }
         var file = new Blob([new Uint8Array(array)], {type: 'image/png'});
-        console.log(file)// Blob 생성
+        // Blob 생성
         var fd = new FormData();	// formData 생성
-        fd.append("img", file);	// file data 추가
+        	// file data 추가
+        fd.append('img', file)
 
-        for (let value of fd.values()) { console.log(value); }
+        for (let value of fd.values()) {
+            console.log(value);
+        }
     }
 
     function filter(filter_name) {
+        saveImage()
         let name = filter_name
         let file_name = 'myCanvas'
         let fd = new FormData();
@@ -123,8 +127,6 @@
 
         fd.append('file_name', file_name);
         fd.append('name', name);
-        console.log(fd)
-        for (let value of fd.values()) { console.log(value); }
 
         $.ajax({
             url: "http://127.0.0.1:5000/api/v1/models/",
@@ -155,6 +157,7 @@
     }
 
     function sticker(sticker_name) {
+
         let img = files[0];
         let file_name = files[0].name;
         let name = sticker_name
@@ -193,6 +196,9 @@
         location.replace('/upload')
     });
 
+    $('#logout').click(function (){
+        location.replace('/logout')
+    });
 
 </script>
 
